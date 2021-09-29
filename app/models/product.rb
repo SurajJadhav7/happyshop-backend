@@ -1,3 +1,4 @@
 class Product < ApplicationRecord
-    validates_presence_of :name, :sold_out, :category, :under_sale, :price, :sale_price, :sale_text
+    validates_presence_of :name, :category, :price, :sale_price, :sale_text
+    validates_inclusion_of :sold_out, :under_sale, :in => [true, false]
 end
