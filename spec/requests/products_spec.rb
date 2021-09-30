@@ -6,7 +6,7 @@ RSpec.describe "Products", type: :request do
     it "returns products" do
       products = create_list(:product, 3)
       get "/products"
-      expect(JSON.parse(response.body)).not_to be_empty
+      expect(response.body).not_to be_empty
     end
   end
 
@@ -56,7 +56,6 @@ RSpec.describe "Products", type: :request do
           sale_price: 6793,
           sale_text: "14% OFF",
         } }
-        puts ">>>>>>>>>>>", JSON.parse(response.body)
         expect(JSON.parse(response.body)["error"]).to eq("Product not created")
         expect(response.status).to eq(422)
       end
