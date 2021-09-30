@@ -2,11 +2,17 @@ class ProductsController < ApplicationController
     # GET /products
     def index
         query = (params[:q] and params[:q].strip != "") ? params[:q].strip : "*"
-        filters = (params[:category] and params[:category] != "") ? {category: params[:category]} : {}
+
         maxprice = (params[:maxprice] and params[:maxprice] != "") ? params[:maxprice] : 1000000
         minprice = (params[:minprice] and params[:minprice] != "") ? params[:minprice] : 0
+
+        filters = (params[:category] and params[:category] != "") ? {category: params[:category]} : {}
         filters[:price] = {gte: minprice, lte: maxprice}
-        @products = Product.search query, fields: [:name, :category], where: filters, page: params[:page], per_page: 25
+
+        order = (params[:sort] and params[:sort] == "lowtohigh") ? {price: :asc} : (params[:sort] == "hightolow" ? {price: :desc} : {})
+
+        @products = Product.search query, fields: [:name, :category], where: filters, order: order, page: params[:page], per_page: 25
+
         render json: @products.to_json
     end
 
