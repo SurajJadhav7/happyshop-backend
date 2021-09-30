@@ -1,7 +1,7 @@
 class ProductsController < ApplicationController
     # GET /products
     def index
-        @products = Product.all
+        @products = Product.page(params[:page])
         render json: @products
     end
 
