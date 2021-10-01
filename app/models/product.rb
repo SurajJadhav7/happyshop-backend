@@ -1,6 +1,8 @@
+# frozen_string_literal: true
+
 class Product < ApplicationRecord
-    searchkick
-    validates_presence_of :name, :category, :price, :sale_price, :sale_text
-    validates_inclusion_of :sold_out, :under_sale, :in => [true, false]
-    validates :price, numericality: { in: 1..1000000 }
+  searchkick
+  validates :name, :category, :price, :sale_price, :sale_text, presence: true
+  validates :sold_out, :under_sale, inclusion: { in: [true, false] }
+  validates :price, numericality: { in: 1..1_000_000 }
 end
