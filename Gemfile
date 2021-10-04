@@ -53,3 +53,4 @@ end
 
 gem 'kaminari'
 gem 'searchkick'
+gem 'bunny'

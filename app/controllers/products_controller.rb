@@ -2,6 +2,7 @@
 
 # includes all the methods for the products controller
 class ProductsController < ApplicationController
+  
   # GET /products
   def index
     query = params[:q] && (params[:q].strip != '') ? params[:q].strip : '*'
@@ -9,7 +10,6 @@ class ProductsController < ApplicationController
     set_filters
     @products = Product.search query, fields: %i[name category], where: @filters, order: @order,
                                       page: params[:page], per_page: 25
-
     render json: @products.to_json
   end
 
