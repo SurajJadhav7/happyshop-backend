@@ -2,7 +2,6 @@
 
 # includes all the methods for the products controller
 class ProductsController < ApplicationController
-  
   # GET /products
   def index
     query = params[:q] && (params[:q].strip != '') ? params[:q].strip : '*'
