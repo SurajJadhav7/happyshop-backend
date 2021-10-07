@@ -4,12 +4,13 @@
 class ProductsController < ApplicationController
   # GET /products
   def index
-    query = params[:q] && (params[:q].strip != '') ? params[:q].strip : '*'
+    query = params[:query] && (params[:query].strip != '') ? params[:query].strip : '*'
     set_order
     set_filters
     @products = Product.search query, fields: %i[name category], where: @filters, order: @order,
-                                      page: params[:page], per_page: 25
-    render json: @products.to_json
+                                      page: params[:page], per_page: 24
+    result = { total: @products.total_count, products: @products }
+    render json: result
   end
 
   # GET /products/:id
@@ -45,7 +46,7 @@ class ProductsController < ApplicationController
   def set_filters
     @filters = params[:category] && (params[:category] != '') ? { category: params[:category] } : {}
     set_max_min_price
-    @filters[:price] = { gte: @minprice, lte: @maxprice }
+    @filters[:sale_price] = { gte: @minprice, lte: @maxprice }
   end
 
   def set_max_min_price
@@ -55,9 +56,9 @@ class ProductsController < ApplicationController
 
   def set_order
     @order = if params[:sort] && (params[:sort] == 'lowtohigh')
-               { price: :asc }
+               { sale_price: :asc }
              else
-               (params[:sort] == 'hightolow' ? { price: :desc } : {})
+               (params[:sort] == 'hightolow' ? { sale_price: :desc } : {})
              end
   end
 end
