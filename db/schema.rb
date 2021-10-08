@@ -1,5 +1,3 @@
-# frozen_string_literal: true
-
 # This file is auto-generated from the current state of the database. Instead
 # of editing this file, please use the migrations feature of Active Record to
 # incrementally modify your database, and then regenerate this schema definition.
@@ -12,19 +10,26 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20_210_929_123_239) do
-  # These are extensions that must be enabled in order to support this database
-  enable_extension 'plpgsql'
+ActiveRecord::Schema.define(version: 2021_10_08_135331) do
 
-  create_table 'products', force: :cascade do |t|
-    t.string 'name'
-    t.boolean 'sold_out'
-    t.string 'category'
-    t.boolean 'under_sale'
-    t.integer 'price'
-    t.integer 'sale_price'
-    t.string 'sale_text'
-    t.datetime 'created_at', precision: 6, null: false
-    t.datetime 'updated_at', precision: 6, null: false
+  # These are extensions that must be enabled in order to support this database
+  enable_extension "plpgsql"
+
+  create_table "products", force: :cascade do |t|
+    t.string "name"
+    t.boolean "sold_out"
+    t.string "category"
+    t.decimal "price", precision: 10, scale: 2
+    t.decimal "sale_price", precision: 10, scale: 2
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+    t.string "subcategory"
+    t.integer "discount"
+    t.boolean "is_new"
+    t.string "model"
+    t.string "color"
+    t.string "thumbnail"
+    t.string "image"
   end
+
 end

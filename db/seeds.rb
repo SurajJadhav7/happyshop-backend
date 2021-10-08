@@ -8,14 +8,23 @@
 #   movies = Movie.create([{ name: 'Star Wars' }, { name: 'Lord of the Rings' }])
 #   Character.create(name: 'Luke', movie: movies.first)
 
-118.times do
-  Product.create(
-    name: Faker::Commerce.product_name,
-    sold_out: [true, false].sample,
-    category: Faker::Commerce.department(max: 1),
-    under_sale: [true, false].sample,
-    price: Faker::Commerce.price(range: 50..10_000),
-    sale_price: Faker::Commerce.price(range: 50..10_000),
-    sale_text: "#{Faker::Number.between(from: 1, to: 100)}% OFF"
-  )
+# Create dummy products using Faker gem
+
+# 118.times do
+#   Product.create(
+#     name: Faker::Commerce.product_name,
+#     sold_out: [true, false].sample,
+#     category: Faker::Commerce.department(max: 1),
+#     under_sale: [true, false].sample,
+#     price: Faker::Commerce.price(range: 50..10_000),
+#     sale_price: Faker::Commerce.price(range: 50..10_000),
+#     sale_text: "#{Faker::Number.between(from: 1, to: 100)}% OFF"
+#   )
+# end
+
+# Create products using products_catalogue.json
+
+records = JSON.parse(File.read('products_catalogue.json'))
+records.each do |record|
+  Product.create(record)
 end
