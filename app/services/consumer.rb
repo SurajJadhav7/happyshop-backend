@@ -5,7 +5,7 @@
 # Rabbitmq Consumer
 class Consumer
   def self.update_products
-    connection = Bunny.new
+    connection = Bunny.new ENV['CLOUDAMQP_URL']
     connection.start
     channel = connection.create_channel
     @queue = channel.queue('happyshop-admin.products', durable: true)
